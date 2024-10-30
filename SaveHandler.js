@@ -12,7 +12,9 @@ class SaveEntry{
  function read(){
     if (localStorage.hasOwnProperty("saveEntries")) {
         saveEntries = JSON.parse(localStorage.saveEntries);
-        saveEntries.forEach((saveEntry) => {table.prepend($("<tr><td>" + saveEntry.difficulty + "</td> <td>" + saveEntry.time + "</td> <td>" + saveEntry.date + "</td></tr>"))});
+        saveEntries.forEach((saveEntry) => {
+            table.prepend(createRow(saveEntry.difficulty, saveEntry.time, saveEntry.date));
+        });
     }
 }
 
@@ -23,7 +25,23 @@ class SaveEntry{
     }
 
     let saveEntry = new SaveEntry(difficulty, time, new Date());
-    table.prepend($("<tr><td>" + saveEntry.difficulty + "</td> <td>" + saveEntry.time + "</td> <td>" + saveEntry.date + "</td></tr>"));
+    table.prepend(createRow(saveEntry.difficulty, saveEntry.time, saveEntry.date));
     saveEntries.push(saveEntry);
     localStorage.setItem("saveEntries", JSON.stringify(saveEntries));
+}
+
+
+function createRow(difficulty, time, date){
+    let row = $(document.createElement("tr"));
+    let col1 = $(document.createElement("td"));
+    let col2 = $(document.createElement("td"));
+    let col3 = $(document.createElement("td"));
+
+    col1.text(difficulty);
+    col2.text(time);
+    col3.text(date);
+
+    row.append([col1, col2, col3]);
+
+    return row;
 }

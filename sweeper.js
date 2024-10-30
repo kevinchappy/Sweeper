@@ -68,7 +68,15 @@ function buildBoard() {
     for (let i = 0; i < columns; i++) {
         for (let j = 0; j < rows; j++) {
             let id = i + "-" + j;
-            let tile = $("<div class='tile-unclicked' id='" + id + "' oncontextmenu='return false'>")
+
+            let tile = $(document.createElement("div"));
+            tile.attr({
+                class: "tile-unclicked",
+                id: id,
+                contextmenu: false
+            });
+            tile.on("contextmenu", function() {return false;})
+
             board.append(tile);
 
             tile.mouseup(function (event) {
