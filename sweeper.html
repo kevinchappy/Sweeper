@@ -2,18 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="sweeper.css">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="sweeper.css?rnd/12345">
 </head>
 <body>
+<header><h1>Sweeper Town</h1></header>
+<nav>
+    <a href="tutorial.html">How to play</a>
+</nav>
 <main>
-    <h1>Mines: <span id="mines-count">0</span></h1>
+    <h2>Mines: <strong id="mines-count">0</strong></h2>
+    <input type="image" src="images/happy-smiley.png" alt="Smiley">
+    <h2 id="time">0</h2>
+
     <div id="board"></div>
     <br>
-    <button id="flag-button">🚩</button>
-</main>
 
-<script src="jquery-3.7.1.min.js"></script>¨
+
+    <div class="dropdown">
+        <button class="dropbtn">Dropdown</button>
+        <div class="dropdown-content">
+
+            <fieldset>
+                <label for="rows-slider">Rows: (min:4, max:30)</label>
+                <input type="range" id="rows-slider" min="4" max="30" value="8"><br>
+                <input type="number" id="rows-input" min="4" max="30" value="8"><br>
+            </fieldset>
+
+
+            <fieldset>
+                <label for="columns-slider">Columns: (min:4, max:30)</label>
+                <input type="range" id="columns-slider" min="4" max="30" value="8"><br>
+                <input type="number" id="columns-input" min="4" max="30" value="8"><br>
+            </fieldset>
+
+
+            <fieldset>
+                <label for="mines-slider">Mines: (min:1, max:800)</label>
+                <input type="range" id="mines-slider" min="8" max="600" value="10"><br>
+                <input type="number" id="mines-input" min="8" max="600" value="10">
+            </fieldset>
+
+
+            <audio autoplay controls loop>
+                <source src="audio/loop.ogg" type="audio/ogg">
+                <source src="audio/loop.mp3" type="audio/mp3">
+                <p>Browser does not support required audio formats.</p>
+            </audio>
+
+
+        </div>
+    </div>
+
+
+    <button><img src="images/settings.png" alt="Settings Button"></button>
+    <button id="flag-button"><img src="images/flag.png" alt="Flag Button"></button>
+    <button><img src="images/mute.png" alt="Mute/Unmute Button"></button>
+
+</main>
+<aside>
+    <table id="last10">
+        <thead>
+        <tr>
+            <th>Difficulty</th>
+            <th>Time</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody id="top10-body">
+
+        </tbody>
+    </table>
+</aside>
+<script src="jquery-3.7.1.min.js"></script>
+<script src="SaveHandler.js"></script>
+<script src="SettingsHandler.js"></script>
 <script src="sweeper.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
