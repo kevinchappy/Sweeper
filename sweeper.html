@@ -4,64 +4,74 @@
     <meta charset="UTF-8">
     <title>Minesweeper</title>
     <link rel="stylesheet" href="sweeper.css?rnd/12345">
+    <link rel="preload" href="images/flag.png" as="image">
+    <link rel="preload" href="images/mute.png" as="image">
+    <link rel="preload" href="images/sound.png" as="image">
+    <link rel="preload" href="images/mine.png" as="image">
+    <link rel="preload" href="images/o-smiley.png" as="image">
+    <link rel="preload" href="images/happy-smiley.png" as="image">
+    <link rel="preload" href="images/dead-smiley.png" as="image">
 </head>
 <body>
-<header><h1>Sweeper Town</h1></header>
+<header><h1>MINESWEEPER</h1></header>
 <nav>
+    <a href="sweeper.html">Home</a>
     <a href="tutorial.html">How to play</a>
 </nav>
 <main>
-    <h2>Mines: <strong id="mines-count">0</strong></h2>
-    <input type="image" src="images/happy-smiley.png" alt="Smiley">
-    <h2 id="time">0</h2>
+    <article id="game">
+        <section>
+            <h2>Mines: <strong id="mine-count">0</strong></h2>
+            <button id="smiley-button"><img id="smiley-image" src="images/happy-smiley.png" alt="Restart Button"></button>
+            <h2>Time: <strong id="time">0</strong></h2>
+        </section>
+        <section id="board">
+        </section>
+        <section>
+            <div class="dropdown">
 
-    <div id="board"></div>
-    <br>
-
-
-    <div class="dropdown">
-        <button class="dropbtn">Dropdown</button>
-        <div class="dropdown-content">
-
-            <fieldset>
-                <label for="rows-slider">Rows: (min:4, max:30)</label>
-                <input type="range" id="rows-slider" min="4" max="30" value="8"><br>
-                <input type="number" id="rows-input" min="4" max="30" value="8"><br>
-            </fieldset>
-
-
-            <fieldset>
-                <label for="columns-slider">Columns: (min:4, max:30)</label>
-                <input type="range" id="columns-slider" min="4" max="30" value="8"><br>
-                <input type="number" id="columns-input" min="4" max="30" value="8"><br>
-            </fieldset>
-
-
-            <fieldset>
-                <label for="mines-slider">Mines: (min:1, max:800)</label>
-                <input type="range" id="mines-slider" min="8" max="600" value="10"><br>
-                <input type="number" id="mines-input" min="8" max="600" value="10">
-            </fieldset>
-
-
-            <audio autoplay controls loop>
-                <source src="audio/loop.ogg" type="audio/ogg">
+                <div class="dropdown-content">
+                    <fieldset>
+                        <legend>Rows</legend>
+                        <label for="rows-slider">min:1, max:30</label><br>
+                        <input type="range" id="rows-slider" min="1" max="30" value="8"><br>
+                        <input type="number" id="rows-input" min="1" max="30" value="8">
+                    </fieldset>
+                    <fieldset>
+                        <legend>Columns</legend>
+                        <label for="columns-slider">min:1, max:30</label><br>
+                        <input type="range" id="columns-slider" min="1" max="30" value="8"><br>
+                        <input type="number" id="columns-input" min="1" max="30" value="8">
+                    </fieldset>
+                    <fieldset>
+                        <legend>Mines</legend>
+                        <label for="mines-slider">min:1, max:800</label><br>
+                        <input type="range" id="mines-slider" min="1" max="600" value="10"><br>
+                        <input type="number" id="mines-input" min="1" max="600" value="10">
+                    </fieldset>
+                    <fieldset>
+                        <legend>Tile Size</legend>
+                        <label for="size-slider">min:28, max:40</label><br>
+                        <input type="range" id="size-slider" min="28" max="40" value="34"><br>
+                        <input type="number" id="size-input" min="28" max="40" value="34">
+                    </fieldset>
+                </div>
+                <button><img id="settings-button" src="images/settings.png" alt="Settings Button"></button>
+            </div>
+            <audio id="audio" loop>
                 <source src="audio/loop.mp3" type="audio/mp3">
                 <p>Browser does not support required audio formats.</p>
             </audio>
+            <button id="flag-button"><img src="images/flag.png" alt="Flag Button"></button>
+            <button id="audio-button"><img id="audio-image" src="images/mute.png" alt="Mute/Unmute Button"></button>
+        </section>
+    </article>
 
-
-        </div>
-    </div>
-
-
-    <button><img src="images/settings.png" alt="Settings Button"></button>
-    <button id="flag-button"><img src="images/flag.png" alt="Flag Button"></button>
-    <button><img src="images/mute.png" alt="Mute/Unmute Button"></button>
 
 </main>
 <aside>
     <table id="last10">
+        <caption>Last 10 Wins</caption>
         <thead>
         <tr>
             <th>Difficulty</th>
@@ -74,10 +84,13 @@
         </tbody>
     </table>
 </aside>
+<footer>
+<a href="mailto:kevinqchapman@gmail.com">Mail Me!</a>
+</footer>
 <script src="jquery-3.7.1.min.js"></script>
 <script src="SaveHandler.js"></script>
 <script src="SettingsHandler.js"></script>
-<script src="sweeper.js"></script>
-<script src="main.js"></script>
+<script src="Game.js"></script>
+<script src="Main.js"></script>
 </body>
 </html>

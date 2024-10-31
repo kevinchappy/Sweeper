@@ -1,5 +1,7 @@
 const board = $("#board");
 const timer = $("#time");
+const mineDisplay = $("#mine-count");
+const smileyImage = $("#smiley-image");
 let flagged = new Set();
 let mines = new Set();
 let visited = new Set();
@@ -7,33 +9,10 @@ let gameRunning = false;
 let time = 0;
 let timerID = null;
 let firstClick = true;
+let flagMode = false;
 let columns = 8;
 let rows = 8;
 let mineCount = 10;
-
-function restart(){
-    console.log(settings.rows);
-    console.log(settings.columns);
-    console.log(settings.mines);
-    reset();
-    initGame();
-}
-
-function reset() {
-    for (let i = 0; i < columns; i++) {
-        for (let j = 0; j < rows; j++) {
-            $("#" + i + "-" + j).remove();
-        }
-    }
-
-    firstClick = true;
-    clearInterval(timerID);
-    timerID = null;
-    flagged = new Set();
-    mines = new Set();
-    visited = new Set();
-}
-
 
 function initGame() {
     rows = settings["rows"];
@@ -49,33 +28,38 @@ function initGame() {
 
     gameRunning = true;
     if (mineCount >= rows * columns) {
-        mineCount = (rows * columns) - 8;
+        mineCount = (rows * columns) - 9;
     }
     assignMines(mineCount, columns, rows, []);
+    mineDisplay.text(mineCount);
+    smileyImage.attr("src", "images/happy-smiley.png");
 }
 
-/**
- * Resizes the board based on tile size. Done dynamically so that board adjusts to resizing.
- *
- */
-function resizeBoard(){
-    let width = $("#0-0").outerHeight();
-    board.css("width", Math.ceil(width * rows));
-    board.css("height", Math.ceil(width * columns));
+function changeTileSize() {
+    let tileStyle = $(".tile");
+    tileStyle.css("width", settings["tile-size"] + "px");
+    tileStyle.css("height", settings["tile-size"] + "px");
 }
 
 function buildBoard() {
-    for (let i = 0; i < columns; i++) {
-        for (let j = 0; j < rows; j++) {
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
             let id = i + "-" + j;
 
             let tile = $(document.createElement("div"));
             tile.attr({
-                class: "tile-unclicked",
+                class: "tile tile-unclicked",
                 id: id,
                 contextmenu: false
             });
-            tile.on("contextmenu", function() {return false;})
+            tile.contextmenu(function () {
+                return false;
+            });
+            tile.mousedown(function (event) {
+               if(event.button === 0 && gameRunning) {
+                   smileyImage.attr("src", "images/o-smiley.png");
+               }
+            });
 
             board.append(tile);
 
@@ -83,10 +67,10 @@ function buildBoard() {
                 if (gameRunning) {
                     switch (event.which) {
                         case 1:
+                            smileyImage.attr("src", "images/happy-smiley.png");
                             leftClickTile(tile);
                             break;
                         case 3:
-
                             rightClickTile(tile);
                             break;
                         default:
@@ -96,15 +80,46 @@ function buildBoard() {
             })
         }
     }
+    changeTileSize();
     resizeBoard();
 }
 
+function reset() {
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+            $("#" + i + "-" + j).remove();
+        }
+    }
+    firstClick = true;
+    clearInterval(timerID);
+    timerID = null;
+    flagged = new Set();
+    mines = new Set();
+    visited = new Set();
+}
+
+function restart() {
+    reset();
+    initGame();
+}
+
+/**
+ * Resizes the board based on tile size. Done dynamically so that board adjusts to resizing.
+ *
+ */
+function resizeBoard() {
+    let width = $("#0-0").outerHeight();
+    board.css("height", Math.ceil(width * rows));
+    board.css("width", Math.ceil(width * columns));
+}
+
+
 function checkVictory() {
-    if (visited.size === (columns * rows) - mineCount) {
+    if (visited.size === (columns * rows) - mines.size) {
         gameRunning = false;
         clearInterval(timerID);
         revealMines();
-        save("30x16-99", time);
+        save(columns + "x" + rows + " / " + mines.size, time);
     }
 }
 
@@ -119,8 +134,8 @@ function revealMines() {
 
 function assignMines(numberOfMines, rows, columns, ignore) {
     while (numberOfMines > 0) {
-        let lat = Math.floor(Math.random() * rows);
-        let lng = Math.floor(Math.random() * columns);
+        let lat = Math.floor(Math.random() * columns);
+        let lng = Math.floor(Math.random() * rows);
         let id = lat + "-" + lng;
 
         if (!mines.has(id) && !ignore.includes(id)) {
@@ -132,17 +147,21 @@ function assignMines(numberOfMines, rows, columns, ignore) {
 }
 
 function leftClickTile(tile) {
-    if (!flagged.has(tile)) {
+    if (flagMode) {
+        rightClickTile(tile);
+    } else if (!flagged.has(tile)) {
         if (!firstClick && mines.has(tile.attr("id"))) {
             clearInterval(timerID);
             revealMines();
+            $("#smiley-image").attr("src", "images/dead-smiley.png");
             gameRunning = false;
         } else if (tile.hasClass("tile-unclicked")) {
             if (firstClick) {
                 firstClickCleaner(tile.attr("id"));
                 firstClick = false;
             }
-            checkSurrounding(tile.attr("id"));
+            checkTiles(tile.attr("id"));
+            $("#smiley-image").attr("src", "images/happy-smiley.png");
             checkVictory();
         }
     }
@@ -176,18 +195,19 @@ function firstClickCleaner(id) {
     assignMines(adjacentMines, columns, rows, tiles);
 }
 
-/*
+/**
 * Checks if surrounding tiles to the one clicked are mines and counts them. Assigns count to div.
 * If the clicked tile is blank, a breadth first search is performed to reveal all connected non-mine tile.
+ *
+ * @param id
 * */
-function checkSurrounding(id) {
+function checkTiles(id) {
     let queue = [];
     queue.push(id);
     while (queue.length > 0) {
         let adjacent = [];
         id = queue.shift();
         visited.add(id);
-
         let coords = id.split("-");
         let adjacentMines = 0;
         let x = parseInt(coords[0]) - 1;
@@ -197,7 +217,7 @@ function checkSurrounding(id) {
                 let long = x + i;
                 let lat = y + j;
 
-                if (long >= 0 && long < columns && lat >= 0 && lat < rows) {
+                if (long >= 0 && long < rows && lat >= 0 && lat < columns) {
                     if (hasMine(long, lat)) {
                         adjacentMines++;
                     } else {
@@ -220,6 +240,8 @@ function checkSurrounding(id) {
         }
         if (tile.hasClass("tile-flagged")) {
             tile.removeClass("tile-flagged");
+            mineCount++;
+            mineDisplay.text(mineCount);
         }
         tile.removeClass("tile-unclicked");
         tile.addClass("tile-clicked");
@@ -231,11 +253,16 @@ function hasMine(x, y) {
 }
 
 function rightClickTile(tile) {
-    if (!flagged.has(tile) && tile.hasClass("tile-unclicked")) {
-        flagged.add(tile);
-        tile.toggleClass("tile-flagged");
-    } else {
-        flagged.delete(tile);
-        tile.toggleClass("tile-flagged");
+    if (tile.hasClass("tile-unclicked") && !firstClick) {
+        if (!flagged.has(tile) && mineCount > 0) {
+            mineCount--;
+            flagged.add(tile);
+            tile.toggleClass("tile-flagged");
+        } else if (flagged.has(tile)) {
+            mineCount++;
+            flagged.delete(tile);
+            tile.toggleClass("tile-flagged");
+        }
+        mineDisplay.text(mineCount);
     }
 }
