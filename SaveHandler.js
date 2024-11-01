@@ -9,7 +9,7 @@ class SaveEntry {
     }
 }
 
-function read() {
+function initSaves() {
     if (localStorage.hasOwnProperty("saveEntries")) {
         saveEntries = JSON.parse(localStorage.saveEntries);
         saveEntries.forEach((saveEntry) => {

@@ -13,23 +13,22 @@
     <link rel="preload" href="images/dead-smiley.png" as="image">
 </head>
 <body>
-<header><h1>MINESWEEPER</h1></header>
+<header><h1 class="white-shadow">MINESWEEPER</h1></header>
 <nav>
     <a href="sweeper.html">Home</a>
-    <a href="tutorial.html">How to play</a>
+    <a href="tutorial.html">Tutorial</a>
 </nav>
 <main>
     <article id="game">
-        <section>
-            <h2>Mines: <strong id="mine-count">0</strong></h2>
+        <section class="horizontal-section">
+            <h2>Mines: <strong id="mine-count" class="monospaced">0</strong></h2>
             <button id="smiley-button"><img id="smiley-image" src="images/happy-smiley.png" alt="Restart Button"></button>
-            <h2>Time: <strong id="time">0</strong></h2>
+            <h2>Time: <strong id="time" class="monospaced">0</strong></h2>
         </section>
         <section id="board">
         </section>
-        <section>
+        <section class="horizontal-section">
             <div class="dropdown">
-
                 <div class="dropdown-content">
                     <fieldset>
                         <legend>Rows</legend>
@@ -71,7 +70,7 @@
 </main>
 <aside>
     <table id="last10">
-        <caption>Last 10 Wins</caption>
+        <caption class="white-shadow">Last 10 Wins</caption>
         <thead>
         <tr>
             <th>Difficulty</th>
@@ -85,7 +84,9 @@
     </table>
 </aside>
 <footer>
-<a href="mailto:kevinqchapman@gmail.com">Mail Me!</a>
+    <p class="white-shadow">Author: Kevin Chapman</p>
+    <a href="mailto:kevinqchapman@gmail.com">Contact me</a>
+    <a href="#">Scroll to top</a>
 </footer>
 <script src="jquery-3.7.1.min.js"></script>
 <script src="SaveHandler.js"></script>

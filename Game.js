@@ -21,17 +21,14 @@ function initGame() {
     buildBoard();
 
     time = 0;
-    timer.text(time);
-    timerID = setInterval(function () {
-        timer.text(++time);
-    }, 1000);
+    timer.text("0000");
 
     gameRunning = true;
     if (mineCount >= rows * columns) {
         mineCount = (rows * columns) - 9;
     }
     assignMines(mineCount, columns, rows, []);
-    mineDisplay.text(mineCount);
+    mineDisplay.text(mineCount.toString().padStart(3, "0"));
     smileyImage.attr("src", "images/happy-smiley.png");
 }
 
@@ -157,6 +154,13 @@ function leftClickTile(tile) {
             gameRunning = false;
         } else if (tile.hasClass("tile-unclicked")) {
             if (firstClick) {
+                timerID = setInterval(function () {
+                    time++;
+                    timer.text(time.toString().padStart(4, "0"));
+                    if (time === 9999){
+                        clearInterval(timerID);
+                    }
+                }, 1000);
                 firstClickCleaner(tile.attr("id"));
                 firstClick = false;
             }
@@ -234,14 +238,14 @@ function checkTiles(id) {
         let tile = $("#" + id);
         if (adjacentMines > 0) {
             tile.append("" + adjacentMines);
-            tile.addClass("x" + adjacentMines);
+            tile.addClass("adjacent-" + adjacentMines);
         } else {
             adjacent.forEach((element) => queue.push(element));
         }
         if (tile.hasClass("tile-flagged")) {
             tile.removeClass("tile-flagged");
             mineCount++;
-            mineDisplay.text(mineCount);
+            mineDisplay.text(mineCount.toString().padStart(3, "0"));
         }
         tile.removeClass("tile-unclicked");
         tile.addClass("tile-clicked");
@@ -263,6 +267,11 @@ function rightClickTile(tile) {
             flagged.delete(tile);
             tile.toggleClass("tile-flagged");
         }
-        mineDisplay.text(mineCount);
+
+        mineDisplay.text(mineCount.toString().padStart(3, "0"));
     }
+}
+
+function padNumber(num){
+
 }

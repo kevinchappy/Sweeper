@@ -3,28 +3,34 @@ body {
     margin: 0 auto;
     grid-template-columns: 1fr 3fr 1fr;
     display: grid;
-    background: bisque;
+    background: #244855;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     text-align: center;
 }
 
+.monospaced {
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
 main {
 
     width: auto;
-    min-width: 930px;
+
+    min-width: 550px;
+    max-width: 1400px;
     grid-column-start: 1;
     grid-column-end: 4;
     height: auto;
-    background: bisque;
-    margin-top: 160px;
-    margin-bottom: 50px;
+
+    margin: 160px auto 50px;
 }
 
 #game {
+
     background: lightgray;
     border-radius: 10px;
-    border: 5px darkslategray solid;
+    border: 5px black solid;
 }
 
 section {
@@ -33,25 +39,56 @@ section {
 }
 
 header {
-    min-height: 75px;
+    align-content: center;
+    min-height: 200px;
     grid-column-start: 1;
     grid-column-end: 5;
+}
+
+.white-shadow{
+    text-shadow: 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000;
+    color: white;
 }
 
 footer {
-    align-content: center;
-    min-height: 75px;
-    background: #CCB69D;
+    display: block;
+    vertical-align: middle;
+    clear: both;
+    justify-content: center;
+    height: 100px;
     grid-column-start: 1;
     grid-column-end: 5;
 }
 
+footer a{
+    margin-right: 25px;
+    float:right;
+}
+
+footer p{
+    margin: 25px;
+    float:left;
+}
+
+
 nav {
     align-content: center;
-    min-height: 50px;
     grid-column-start: 1;
     grid-column-end: 5;
-    background: #D6C5B1
+
+}
+
+a {
+    color: black;
+    background: #FBE9D0;
+    text-decoration: none;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+a:hover {
+    color: white;
+    background: darkslategray;
 }
 
 aside {
@@ -61,13 +98,11 @@ aside {
     grid-column-start: 1;
     grid-column-end: 4;
     justify-items: center;
-    background: bisque;
     padding-bottom: 50px;
-
-
 }
 
 #board {
+
     border: 10px solid darkgray;
     background-color: lightgray;
 
@@ -104,7 +139,12 @@ button image {
     border: none;
     height: 80px;
     width: 80px;
+}
 
+.horizontal-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .tile {
@@ -145,35 +185,35 @@ button image {
     content: url("images/mine.png");
 }
 
-.x1 {
+.adjacent-1 {
     color: blue;
 }
 
-.x2 {
+.adjacent-2 {
     color: green;
 }
 
-.x3 {
+.adjacent-3 {
     color: red;
 }
 
-.x4 {
+.adjacent-4 {
     color: navy;
 }
 
-.x5 {
+.adjacent-5 {
     color: brown;
 }
 
-.x6 {
+.adjacent-6 {
     color: teal;
 }
 
-.x7 {
+.adjacent-7 {
     color: black;
 }
 
-.x8 {
+.adjacent-8 {
     color: gray;
 }
 
@@ -205,8 +245,8 @@ button {
     border: 1px black solid;
     background-color: #dadada;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    margin-left: 25px;
-    margin-right: 25px;
+    margin-left: 75px;
+    margin-right: 75px;
 }
 
 .dropdown-content {
@@ -240,13 +280,17 @@ button {
 @media only screen and (min-width: 1620px) {
 
     body {
-        max-width: 1620px;
+        max-width: 1650px;
     }
 
     main {
+
+
         align-content: center;
         margin-bottom: 160px;
 
+        margin-left: 0;
+        margin-right: 0;
 
         grid-column-start: 1;
         grid-column-end: 4;
@@ -257,5 +301,8 @@ button {
         grid-column-start: 4;
         grid-column-end: 5;
     }
+
+
+
 }
 
