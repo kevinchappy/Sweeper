@@ -23,9 +23,9 @@ function save(difficulty, time) {
         saveEntries.shift();
         $("#last10 tr:last").remove();
     }
-    let saveEntry = new SaveEntry(difficulty, time, new Date().toLocaleString());
-    table.prepend(createRow(saveEntry.difficulty, saveEntry.time, saveEntry.date));
-    saveEntries.push(saveEntry);
+    let newSaveEntry = new SaveEntry(difficulty, time, new Date().toLocaleString());
+    table.prepend(createRow(newSaveEntry.difficulty, newSaveEntry.time, newSaveEntry.date));
+    saveEntries.push(newSaveEntry);
     localStorage.setItem("saveEntries", JSON.stringify(saveEntries));
 }
 
