@@ -19,15 +19,14 @@
     <a href="tutorial.html">Tutorial</a>
 </nav>
 <main>
-    <article id="game">
+    <div id="game">
         <section class="horizontal-section">
             <h2 class="bold">Mines: <strong id="mine-count" class="monospaced">0</strong></h2>
             <button id="smiley-button"><img id="smiley-image" src="images/happy-smiley.png" alt="Restart Button"></button>
             <h2 class="bold">Time: <strong id="time" class="monospaced">0</strong></h2>
         </section>
-        <section id="board">
-        </section>
-        <section class="horizontal-section">
+        <div id="board"></div>
+        <div class="horizontal-section">
             <div class="dropdown">
                 <div class="dropdown-content">
                     <fieldset>
@@ -63,8 +62,8 @@
             </audio>
             <button id="flag-button"><img src="images/flag.png" alt="Flag Button"></button>
             <button id="audio-button"><img id="audio-image" src="images/mute.png" alt="Mute/Unmute Button"></button>
-        </section>
-    </article>
+        </div>
+    </div>
 </main>
 <aside>
     <table id="last10">
