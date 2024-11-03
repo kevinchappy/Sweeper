@@ -230,7 +230,7 @@ function checkMines(startX, startY) {
             let long = startX + i;
             let lat = startY + j;
             if (long >= 0 && long < rows && lat >= 0 && lat < columns) {
-                if (mines.has(x + "-" + y)) {
+                if (mines.has(long + "-" + lat)) {
                     adjacentMines++;
                 }
                 visited.push(long + "-" + lat);
