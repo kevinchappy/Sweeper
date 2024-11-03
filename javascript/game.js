@@ -34,13 +34,14 @@ function initGame() {
     if (mineCount >= rows * columns) {
         mineCount = (rows * columns) - 10;
     }
-    assignMines(mineCount, columns, rows, []);
+    assignMines(mineCount, []);
     mineDisplay.text(mineCount.toString().padStart(3, "0"));
     smileyImage.attr("src", "resources/happy-smiley.png");
 }
 
 /*
- * Changes CSS class attributes for tile class. Changes height and width values for all tiles.
+ * Changes CSS class attributes for tile class.
+ * Essentially changes height and width values for all tiles.
  * Reads fresh values from settings.
  */
 function changeTileSize() {
@@ -49,6 +50,11 @@ function changeTileSize() {
     tileStyle.css("height", settings["tile-size"] + "px");
 }
 
+/*
+ * Builds game board elements. Creates new divs for each game tile and assigns their id according to their row and column.
+ * Also assigns the tile and tile-unclicked css classes.
+ * Sets up event handlers for each tile to handle mousedown and mouseup events. Disables context menu on right click.
+ */
 function buildBoard() {
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < columns; j++) {
@@ -58,9 +64,8 @@ function buildBoard() {
             tile.attr({
                 class: "tile tile-unclicked",
                 id: id,
-                contextmenu: false
             });
-            tile.contextmenu(function () {
+            tile.contextmenu(function (){
                 return false;
             });
             tile.mousedown(function (event) {
@@ -80,7 +85,7 @@ function buildBoard() {
                             break;
                         case 3:
                             rightClickTile(tile);
-                            break;
+                            return false;
                         default:
                             break;
                     }
@@ -92,6 +97,11 @@ function buildBoard() {
     resizeBoard();
 }
 
+/*
+ * Resets game state and board to make it ready for another round.
+ * Iterates through all tiles and removes them.
+ * Sets all game state variables to their default value.
+ */
 function reset() {
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < columns; j++) {
@@ -106,14 +116,17 @@ function reset() {
     visited = new Set();
 }
 
+/*
+ * Small help function for restarting the game.
+ * Calls function to reset game state, then the function to initiate the game.
+ */
 function restart() {
     reset();
     initGame();
 }
 
-/**
- * Resizes the board based on tile size. Done dynamically so that board adjusts to resizing.
- *
+/*
+ * Resizes the board based on tile size. Done dynamically so that board adjusts to zooming.
  */
 function resizeBoard() {
     let width = $("#0-0").outerHeight();
@@ -121,7 +134,10 @@ function resizeBoard() {
     board.css("width", Math.ceil(width * columns));
 }
 
-
+/*
+ * Checks if the victory condition is fulfilled. Condition is fulfilled if the amount of visited tiles equals the amount of tiles without mines.
+ * If fulfilled, game is halted and remaining un-flagged mines are revealed. Saves game data to last 10 games table and local storage.
+ */
 function checkVictory() {
     if (visited.size === (columns * rows) - mines.size) {
         gameRunning = false;
@@ -131,6 +147,10 @@ function checkVictory() {
     }
 }
 
+/*
+ * Reveals all mines on the board that are not flagged.
+ * Iterates through each un-flagged mine with a mine and adds the mine CSS class to them.
+ */
 function revealMines() {
     mines.forEach(function (elem) {
         let mine = $("#" + elem);
@@ -140,11 +160,18 @@ function revealMines() {
     });
 }
 
-function assignMines(numberOfMines, rows, columns, ignore) {
+/*
+ * Randomly assigns mines to tiles. Assigns mines up to specified number and ignores mines in array of tiles to ignore.
+ * Updates mine count display element to reflect the amount of mines placed.
+ *
+ * numberOfMines : Number of mines to be assigned.
+ * ignore : array of tiles that mines are not allowed to be placed in.
+ */
+function assignMines(numberOfMines, ignore) {
     while (numberOfMines > 0) {
-        let lat = Math.floor(Math.random() * columns);
         let lng = Math.floor(Math.random() * rows);
-        let id = lat + "-" + lng;
+        let lat = Math.floor(Math.random() * columns);
+        let id = lng + "-" + lat;
 
         if (!mines.has(id) && !ignore.includes(id)) {
             mines.add(id);
@@ -161,7 +188,7 @@ function assignMines(numberOfMines, rows, columns, ignore) {
  * Starts game timer if first click of the game and calls method to "clean" area around the first click.
  * Otherwise, in the base case the method to reveal tiles around clicked tile is called and the victory condition is checked.
  *
- * tile : jQuery object of the clicked tile.
+ * tile : jQuery object of the clicked tile to be handled.
  */
 function leftClickTile(tile) {
     if (flagMode) {
@@ -204,7 +231,7 @@ function firstClickCleaner(id) {
     let adjacentTiles = result[0];
     let adjacentMines = result[1];
     adjacentTiles.forEach((tile) => mines.delete(tile));
-    assignMines(adjacentMines, columns, rows, adjacentTiles);
+    assignMines(adjacentMines, adjacentTiles);
 }
 
 /*
@@ -273,7 +300,6 @@ function checkMines(startX, startY) {
 /*
  * Handles right click events on tiles.
  * Toggles flag class on un-clicked tiles and updates mine count display to reflect how many mines are left based on placed flags.
- *
  */
 function rightClickTile(tile) {
     if (tile.hasClass("tile-unclicked") && !firstClick) {

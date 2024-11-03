@@ -221,21 +221,11 @@ button image {
     height: 34px;
     border: 1px solid floralwhite;
 
-    /* text */
     font-size: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
-    -webkit-user-select: none;
-    /* Chrome, Opera */
-    -webkit-touch-callout: none;
-    /* Safari */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* Internet Explorer/Edge */
-    user-select: none;
-    /* Standard property */
+
 }
 
 .tile-unclicked {
