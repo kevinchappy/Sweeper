@@ -53,9 +53,9 @@ function buildBoard() {
                 return false;
             });
             tile.mousedown(function (event) {
-               if(event.button === 0 && gameRunning) {
-                   smileyImage.attr("src", "images/o-smiley.png");
-               }
+                if (event.button === 0 && gameRunning) {
+                    smileyImage.attr("src", "images/o-smiley.png");
+                }
             });
 
             board.append(tile);
@@ -150,21 +150,21 @@ function leftClickTile(tile) {
         if (!firstClick && mines.has(tile.attr("id"))) {
             clearInterval(timerID);
             revealMines();
-            $("#smiley-image").attr("src", "images/dead-smiley.png");
+            smileyImage.attr("src", "images/dead-smiley.png");
             gameRunning = false;
         } else if (tile.hasClass("tile-unclicked")) {
             if (firstClick) {
                 timerID = setInterval(function () {
                     time++;
                     timer.text(time.toString().padStart(4, "0"));
-                    if (time === 9999){
+                    if (time === 9999) {
                         clearInterval(timerID);
                     }
                 }, 1000);
                 firstClickCleaner(tile.attr("id"));
                 firstClick = false;
             }
-            checkTiles(tile.attr("id"));
+            revealTiles(tile.attr("id"));
             $("#smiley-image").attr("src", "images/happy-smiley.png");
             checkVictory();
         }
@@ -176,65 +176,35 @@ function leftClickTile(tile) {
  *
  * @param id
  */
+
 function firstClickCleaner(id) {
-    let adjacentMines = 0;
     let coords = id.split("-");
-    let tiles = [];
-
-    let x = parseInt(coords[0]) - 1;
-    let y = parseInt(coords[1]) - 1;
-
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            let long = x + i;
-            let lat = y + j;
-
-            if (hasMine(long, lat)) {
-                adjacentMines++;
-            }
-            mines.delete(long + "-" + lat);
-            tiles.push(long + "-" + lat);
-        }
-    }
-    assignMines(adjacentMines, columns, rows, tiles);
+    let result = checkMines(parseInt(coords[0]) - 1, parseInt(coords[1]) - 1)
+    let adjacentTiles = result[0];
+    let adjacentMines = result[1];
+    adjacentTiles.forEach((tile) => mines.delete(tile));
+    assignMines(adjacentMines, columns, rows, adjacentTiles);
 }
 
 /**
-* Checks if surrounding tiles to the one clicked are mines and counts them. Assigns count to div.
-* If the clicked tile is blank, a breadth first search is performed to reveal all connected non-mine tile.
+ * Checks if surrounding tiles to the one clicked are mines and counts them. Assigns count to div.
+ * If the clicked tile is blank, a breadth first search is performed to reveal all connected non-mine tile.
  *
  * @param id
-* */
-function checkTiles(id) {
+ * */
+function revealTiles(id) {
     let queue = [];
     queue.push(id);
     while (queue.length > 0) {
-        let adjacent = [];
         id = queue.shift();
         visited.add(id);
         let coords = id.split("-");
-        let adjacentMines = 0;
-        let x = parseInt(coords[0]) - 1;
-        let y = parseInt(coords[1]) - 1;
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                let long = x + i;
-                let lat = y + j;
+        let result = checkMines(parseInt(coords[0]) - 1, parseInt(coords[1]) - 1);
+        let adjacent = result[0];
+        let adjacentMines = result[1];
 
-                if (long >= 0 && long < rows && lat >= 0 && lat < columns) {
-                    if (hasMine(long, lat)) {
-                        adjacentMines++;
-                    } else {
+        adjacent = adjacent.filter((newTile) => (newTile.length > 0 && !queue.includes(newTile) && !visited.has(newTile)));
 
-                        let newTile = long + "-" + lat;
-
-                        if ((newTile.length > 0 && !queue.includes(newTile) && !visited.has(newTile))) {
-                            adjacent.push(newTile);
-                        }
-                    }
-                }
-            }
-        }
         let tile = $("#" + id);
         if (adjacentMines > 0) {
             tile.append("" + adjacentMines);
@@ -252,8 +222,22 @@ function checkTiles(id) {
     }
 }
 
-function hasMine(x, y) {
-    return mines.has(x + "-" + y);
+function checkMines(startX, startY) {
+    let adjacentMines = 0;
+    let visited = [];
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            let long = startX + i;
+            let lat = startY + j;
+            if (long >= 0 && long < rows && lat >= 0 && lat < columns) {
+                if (mines.has(x + "-" + y)) {
+                    adjacentMines++;
+                }
+                visited.push(long + "-" + lat);
+            }
+        }
+    }
+    return [visited, adjacentMines];
 }
 
 function rightClickTile(tile) {
@@ -267,11 +251,6 @@ function rightClickTile(tile) {
             flagged.delete(tile);
             tile.toggleClass("tile-flagged");
         }
-
         mineDisplay.text(mineCount.toString().padStart(3, "0"));
     }
-}
-
-function padNumber(num){
-
 }

@@ -39,7 +39,7 @@ function initSettings() {
 
     setupInput($("#rows-slider"), $("#rows-input"), 1, 30, "rows");
     setupInput($("#columns-slider"), $("#columns-input"), 1, 30, "columns");
-    setupInput($("#mines-slider"), $("#mines-input"), 1, 600, "mines");
+    setupInput($("#mines-slider"), $("#mines-input"), 1, 999, "mines");
     setupInput($("#size-slider"), $("#size-input"), 28, 40, "tile-size");
 }
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Minesweeper</title>
-    <link rel="stylesheet" href="sweeper.css?rnd/12345">
+    <link rel="stylesheet" href="layout.css">
     <link rel="preload" href="images/flag.png" as="image">
     <link rel="preload" href="images/mute.png" as="image">
     <link rel="preload" href="images/sound.png" as="image">
@@ -15,15 +15,15 @@
 <body>
 <header><h1 class="white-shadow">MINESWEEPER</h1></header>
 <nav>
-    <a href="sweeper.html">Home</a>
+    <a href="minesweeper.html">Home</a>
     <a href="tutorial.html">Tutorial</a>
 </nav>
 <main>
     <article id="game">
         <section class="horizontal-section">
-            <h2>Mines: <strong id="mine-count" class="monospaced">0</strong></h2>
+            <h2 class="bold">Mines: <strong id="mine-count" class="monospaced">0</strong></h2>
             <button id="smiley-button"><img id="smiley-image" src="images/happy-smiley.png" alt="Restart Button"></button>
-            <h2>Time: <strong id="time" class="monospaced">0</strong></h2>
+            <h2 class="bold">Time: <strong id="time" class="monospaced">0</strong></h2>
         </section>
         <section id="board">
         </section>
@@ -44,9 +44,9 @@
                     </fieldset>
                     <fieldset>
                         <legend>Mines</legend>
-                        <label for="mines-slider">min:1, max:800</label><br>
-                        <input type="range" id="mines-slider" min="1" max="600" value="10"><br>
-                        <input type="number" id="mines-input" min="1" max="600" value="10">
+                        <label for="mines-slider">min:1, max:999</label><br>
+                        <input type="range" id="mines-slider" min="1" max="999" value="10"><br>
+                        <input type="number" id="mines-input" min="1" max="999" value="10">
                     </fieldset>
                     <fieldset>
                         <legend>Tile Size</legend>
@@ -65,8 +65,6 @@
             <button id="audio-button"><img id="audio-image" src="images/mute.png" alt="Mute/Unmute Button"></button>
         </section>
     </article>
-
-
 </main>
 <aside>
     <table id="last10">
@@ -84,14 +82,14 @@
     </table>
 </aside>
 <footer>
-    <p class="white-shadow">Author: Kevin Chapman</p>
+    <strong class="white-shadow">Author: Kevin Chapman</strong>
     <a href="mailto:kevinqchapman@gmail.com">Contact me</a>
     <a href="#">Scroll to top</a>
 </footer>
 <script src="jquery-3.7.1.min.js"></script>
-<script src="SaveHandler.js"></script>
-<script src="SettingsHandler.js"></script>
-<script src="Game.js"></script>
-<script src="Main.js"></script>
+<script src="save-handler.js"></script>
+<script src="settings-handler.js"></script>
+<script src="game.js"></script>
+<script src="main.js"></script>
 </body>
 </html>

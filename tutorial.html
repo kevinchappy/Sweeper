@@ -3,26 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Tutorial</title>
-    <link rel="stylesheet" href="sweeper.css?rnd/12345">
+    <link rel="stylesheet" href="layout.css">
 </head>
 <body>
 <header>
     <h1 class="white-shadow">TUTORIAL</h1>
 </header>
 <nav>
-    <a href="sweeper.html">Home</a>
+    <a href="minesweeper.html">Home</a>
     <a href="tutorial.html">Tutorial</a>
 </nav>
-<main>
-    <h2>Welcome</h2>
-    <p>So you wanna be a
-        <mark>Minesweeper</mark>
-        ? Well you have come to the right place. In this tutorial we will go over the basic controls and interface of
-        Minesweeper. So strap in and pay attention cadet!
-    </p>
+<main class="text-page">
+    <article>
+        <section>
+            <h2>Welcome</h2>
+            <p>So you wanna be a
+                <mark>Minesweeper</mark>
+                ? Well you have come to the right place. In this tutorial we will go over the basic controls and
+                interface of Minesweeper. So strap in and pay attention cadet!
+            </p>
+        </section>
+        <section>
+            <h2>The Rules</h2>
+            <p>Minesweeper is a game with clickable tiles, where some of these tiles have mines hidden behind them. The
+                goal is to reveal all tiles while avoiding the mines. Importantly, your focus should be on trying to
+                deduce
+                where mines are using logic, not by guessing.</p>
+        </section>
+        <section>
+            <h2>The Controls</h2>
+            <p>The basic controls are:</p>
+            <dl>
+                <dt><strong>Left Click</strong></dt>
+                <dd>Reveals a tile. If the tile has a mine you lose.</dd>
+                <dt><strong>Right Click</strong></dt>
+                <dd>Places a flag on a tile that you think contains a mine. Alternatively, toggle flag placement mode
+                    with the flag button at the bottom of the screen if your device does not have a right click button
+                </dd>
+            </dl>
+        </section>
+        <section>
+            <h2>The Numbers</h2>
+            <div class="clear">
+                <p class="float-left">When you reveal a tile without a mine you might see a number displayed. This
+                    number
+                    signifies the amount of
+                    mines adjacent to the revealed tile. You can use this information to deduce where mines are located.
+                    For example, consider the image to the right. The flagged tile must have a mine since it is the only
+                    unrevealed tile next to the <strong>1</strong> tile. Also, there must be two other mines in the
+                    un-clicked tiles to the left because of the adjacent <strong>3</strong> tile.</p>
+                <figure class="float-right">
+                    <img src="images/numbers-example-50.jpg" alt="Tiles with different numbers.">
+                    <figcaption>Example of tiles with numbers and flags</figcaption>
+                </figure>
+            </div>
+        </section>
+        <section>
+            <h2>The Buttons</h2>
+            <p>On the game board you will see some buttons. These will help you access different features and settings.
+                They are as follows:</p>
+            <ul class="clear">
+                <li>
+                    <button><img src="images/happy-smiley.png" alt="Smiley button"></button>
+                    Smiley button - Restarts the game.
+                </li>
+                <li>
+                    <button><img src="images/flag.png" alt="Flag button"></button>
+                    Flag button - Toggles flag placement mode.
+                </li>
+                <li>
+                    <button><img src="images/settings.png" alt="Settings button"></button>
+                    Settings button - Shows settings menu.
+                </li>
+                <li>
+                    <button><img src="images/mute.png" alt="Audio button"></button>
+                    Audio button - toggles background music on/off.
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Congratulations</h2>
+            <p>If you have read this far then you are ready to get out there and sweep some mines, cadet. There are many
+                tricks and strategies to use when playing Minesweeper. But, i'll leave that up to you to discover.</p>
+            <p>Now get out there and have fun!</p>
+        </section>
+    </article>
 </main>
 <footer>
-    <p class="white-shadow">Author: Kevin Chapman</p>
+    <strong class="white-shadow">Author: Kevin Chapman</strong>
     <a href="mailto:kevinqchapman@gmail.com">Contact me</a>
     <a href="#">Scroll to top</a>
 </footer>

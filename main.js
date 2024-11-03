@@ -4,7 +4,7 @@ const flagButton = $("#flag-button")
 const audioButton = $("#audio-button");
 
 /*
- *
+ * Starting point for websites
  */
 $(document).ready(function () {
     initSaves();
