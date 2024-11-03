@@ -88,8 +88,14 @@ footer a {
 }
 
 footer strong {
+
     margin: 25px;
     float: left;
+}
+
+.white-shadow {
+    color: white;
+    text-shadow: 2px 0 0 black, 0 -2px 0 black, 0 2px 0 black, -2px 0 0 black;
 }
 
 
@@ -365,7 +371,5 @@ button {
         grid-column-start: 4;
         grid-column-end: 5;
     }
-
-
 }
 
