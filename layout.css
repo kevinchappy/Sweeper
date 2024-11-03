@@ -98,12 +98,10 @@ footer strong {
     text-shadow: 2px 0 0 black, 0 -2px 0 black, 0 2px 0 black, -2px 0 0 black;
 }
 
-
 nav {
     align-content: center;
     grid-column-start: 1;
     grid-column-end: 5;
-
 }
 
 dt {
@@ -135,7 +133,7 @@ ul li {
 }
 
 li button {
-    margin-right: 15px;
+    margin: 0 15px 0 0;
 }
 
 .float-right {
@@ -250,11 +248,11 @@ button image {
 }
 
 .tile-flagged {
-    content: url("images/flag.png");
+    content: url("resources/flag.png");
 }
 
 .mine {
-    content: url("images/mine.png");
+    content: url("resources/mine.png");
 }
 
 .adjacent-1 {
@@ -317,8 +315,7 @@ button {
     border: 1px black solid;
     background-color: #dadada;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    margin-left: 75px;
-    margin-right: 75px;
+    margin: 10px 75px;
 }
 
 .dropdown-content {

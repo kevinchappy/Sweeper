@@ -24,11 +24,11 @@ function handleAudioButton() {
     if (audio[0].paused) {
         audio[0].play();
         audioButton.css("background", "darkgray")
-        audioImage.attr("src", "images/sound.png");
+        audioImage.attr("src", "resources/sound.png");
     } else {
         audio[0].pause();
         audioButton.css("background", "#dadada");
-        audioImage.attr("src", "images/mute.png");
+        audioImage.attr("src", "resources/mute.png");
     }
 }
 

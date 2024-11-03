@@ -1,6 +1,10 @@
 let table = $("#last10");
 let saveEntries = [];
 
+/*
+ * Class that contains save information for a finished round.
+ * Contains difficulty, round time and date and time of completion in local time format.
+ */
 class SaveEntry {
     constructor(difficulty, time, date) {
         this.difficulty = difficulty;
@@ -9,6 +13,9 @@ class SaveEntry {
     }
 }
 
+/*
+ * Loads saves from storage and populates table element.
+ */
 function initSaves() {
     if (localStorage.hasOwnProperty("saveEntries")) {
         saveEntries = JSON.parse(localStorage.saveEntries);
@@ -18,6 +25,13 @@ function initSaves() {
     }
 }
 
+/*
+ * Stores entry of finished game round to table element. Also saves list of entries in localStorage.
+ * Limits entries to 10 and removes oldest entry if length is equal to 10.
+ *
+ * difficulty : String containing difficulty settings
+ * time : String containing game length
+ */
 function save(difficulty, time) {
     if (saveEntries.length === 10) {
         saveEntries.shift();
@@ -29,6 +43,13 @@ function save(difficulty, time) {
     localStorage.setItem("saveEntries", JSON.stringify(saveEntries));
 }
 
+/* Creates new table row to containing 3 columns. Columns contain difficulty settings, time and current date in local format.
+ *
+ * difficulty : String containing difficulty settings
+ * time : String containing game length
+ * date : String containing local date and time
+ * returns table row jQuery element
+ */
 function createRow(difficulty, time, date) {
     let row = $(document.createElement("tr"));
     let col1 = $(document.createElement("td"));

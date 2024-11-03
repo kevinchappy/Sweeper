@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>Minesweeper</title>
     <link rel="stylesheet" href="layout.css">
-    <link rel="preload" href="images/flag.png" as="image">
-    <link rel="preload" href="images/mute.png" as="image">
-    <link rel="preload" href="images/sound.png" as="image">
-    <link rel="preload" href="images/mine.png" as="image">
-    <link rel="preload" href="images/o-smiley.png" as="image">
-    <link rel="preload" href="images/happy-smiley.png" as="image">
-    <link rel="preload" href="images/dead-smiley.png" as="image">
+    <link rel="preload" href="resources/flag.png" as="image">
+    <link rel="preload" href="resources/mute.png" as="image">
+    <link rel="preload" href="resources/sound.png" as="image">
+    <link rel="preload" href="resources/mine.png" as="image">
+    <link rel="preload" href="resources/o-smiley.png" as="image">
+    <link rel="preload" href="resources/happy-smiley.png" as="image">
+    <link rel="preload" href="resources/dead-smiley.png" as="image">
 </head>
 <body>
 <header><h1 class="white-shadow">MINESWEEPER</h1></header>
@@ -22,7 +22,7 @@
     <div id="game">
         <section class="horizontal-section">
             <h2 class="bold">Mines: <strong id="mine-count" class="monospaced">0</strong></h2>
-            <button id="smiley-button"><img id="smiley-image" src="images/happy-smiley.png" alt="Restart Button"></button>
+            <button id="smiley-button"><img id="smiley-image" src="resources/happy-smiley.png" alt="Restart Button"></button>
             <h2 class="bold">Time: <strong id="time" class="monospaced">0</strong></h2>
         </section>
         <div id="board"></div>
@@ -54,14 +54,14 @@
                         <input type="number" id="size-input" min="28" max="40" value="34">
                     </fieldset>
                 </div>
-                <button><img id="settings-button" src="images/settings.png" alt="Settings Button"></button>
+                <button><img id="settings-button" src="resources/settings.png" alt="Settings Button"></button>
             </div>
             <audio id="audio" loop>
-                <source src="audio/loop.mp3" type="audio/mp3">
+                <source src="resources/loop.mp3" type="audio/mp3">
                 <p>Browser does not support required audio formats.</p>
             </audio>
-            <button id="flag-button"><img src="images/flag.png" alt="Flag Button"></button>
-            <button id="audio-button"><img id="audio-image" src="images/mute.png" alt="Mute/Unmute Button"></button>
+            <button id="flag-button"><img src="resources/flag.png" alt="Flag Button"></button>
+            <button id="audio-button"><img id="audio-image" src="resources/mute.png" alt="Mute/Unmute Button"></button>
         </div>
     </div>
 </main>
@@ -85,10 +85,10 @@
     <a href="mailto:kevinqchapman@gmail.com">Contact me</a>
     <a href="#">Scroll to top</a>
 </footer>
-<script src="jquery-3.7.1.min.js"></script>
-<script src="save-handler.js"></script>
-<script src="settings-handler.js"></script>
-<script src="game.js"></script>
-<script src="main.js"></script>
+<script src="javascript/jquery-3.7.1.min.js"></script>
+<script src="javascript/save-handler.js"></script>
+<script src="javascript/settings-handler.js"></script>
+<script src="javascript/game.js"></script>
+<script src="javascript/main.js"></script>
 </body>
 </html>
